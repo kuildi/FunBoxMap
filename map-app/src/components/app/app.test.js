@@ -1,8 +1,14 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../services/store';
 import App from './app';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+it('App renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+    , div);
 });
