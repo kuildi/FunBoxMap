@@ -25,3 +25,17 @@ body {
 [class*="-balloon"] {
   border-radius: 6px;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 6px;
+  background-color:#3434;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color:#556172;
+}
