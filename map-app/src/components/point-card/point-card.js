@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
+
+import CardStyles from './point-card.module.css';
+import { ReactComponent as RemoveIcon } from '../../icons/close.svg';
 import { REMOVE_POINT, DRAG_SORT } from '../../services/actions/constants';
 
 const PointCard = (props) => {
@@ -58,9 +61,15 @@ const PointCard = (props) => {
     drag(drop(ref));
 
     return (
-        <li ref={ref} style={{ opacity }}>
-            <p>{props.text}</p>
-            <button onClick={() => removePoint(props.pointKey)}>Remove</button>
+        <li ref={ref} className={CardStyles.point_card} style={{ opacity }}>
+            <p title={props.text}>{props.text}</p>
+            <button
+                className={CardStyles.button}
+                title='Удалить точку'
+                onClick={() => removePoint(props.pointKey)}
+            >
+                <RemoveIcon />
+            </button>
         </li>
     )
 }

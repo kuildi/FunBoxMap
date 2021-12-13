@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import ListStyles from './points-list.module.css'
 import PointCard  from '../point-card/point-card';
 
 const PointsList = () => {
@@ -11,7 +12,7 @@ const PointsList = () => {
     )
 
     return (
-        <ul>
+        <ul className={ListStyles.points_list}>
             {pointsCards}
         </ul>
     )

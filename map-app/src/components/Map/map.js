@@ -22,28 +22,8 @@ const MapComponent = () => {
                 "<div class='popover-inner'>" +
                 "$[properties.request]" +
                 "</div>" +
-                "</div>", {
-                // build: function () {
-                //     console.log('check');
-                //     this.constructor.superclass.build.call(this);
-                //     this._element = this.getParentElement().querySelector('.popover');
-                //     this.applyElementOffset();
-                // },
-                // clear: function () {
-                //     this.constructor.superclass.clear.call(this);
-                // },
-                // onSublayoutSizeChange: function () {
-                //     MyBalloonLayout.superclass.onSublayoutSizeChange.apply(this, arguments);
-                //     this.applyElementOffset();
-                //     this.events.fire('shapechange');
-                // },
-                // applyElementOffset: function () {
-                //     Object.assign(this._element.style, {
-                //         left: -(this._element.offsetWidth / 2) + 'px',
-                //         top: -(this._element.offsetHeight) + 'px'
-                //     });
-                // }
-            });
+                "</div>"
+            );
 
             const multiRoute = new ymaps.multiRouter.MultiRoute(
                 {
@@ -66,19 +46,22 @@ const MapComponent = () => {
             ref.geoObjects.removeAll();
             ref.geoObjects.add(multiRoute);
 
-            multiRoute.model.events.add("requestsuccess", function () {
+            multiRoute.events.add('update', () => {
                 let newPoints = multiRoute.getWayPoints();
+                let geoObjArr = newPoints.toArray();
+
+                // Выставим центр карты по координатам последней точки
+                ref.setCenter(geoObjArr[geoObjArr.length - 1].geometry.getCoordinates());
 
                 newPoints.each((item, i) => {
-                    console.log(item.properties._data.request);
-
-                    ref.setCenter(item.geometry.getCoordinates());
-
+                    // Добавим кастомный балун для каждой точки
                     ymaps.geoObject.addon.balloon.get(item);
                     item.options.set({
                         balloonContentLayout: MyBalloonLayout
                     });
 
+                    // После драга точки на карте, поле request содержит массив координат
+                    // Воспользуемся geocode что бы вернуть новое название точки
                     if (typeof item.properties._data.request != 'string') {
                         ymaps.geocode(item.geometry.getCoordinates(), {
                             results: 1
@@ -87,9 +70,10 @@ const MapComponent = () => {
                                 res.geoObjects.get(0).properties.get('text') :
                                 'Не удалось определить адрес.';
 
+                            // Обновим text соответствующего объекта в оригинальном массиве
                             points[i].text = newContent;
 
-                            // Задаем новое содержимое балуна в соответствующее свойство метки.
+                            // Задаем новое содержимое балуна
                             item.options.set({
                                 balloonContentLayout: ymaps.templateLayoutFactory.createClass(
                                     "<div class='popover top'>" +
@@ -105,11 +89,10 @@ const MapComponent = () => {
                             })
                         });
                     }
-                })
+                });
             });
         }
     }
-
     return (
         <YMaps query={{ apikey: API_KEY }}>
             <Map
@@ -122,6 +105,7 @@ const MapComponent = () => {
                 onLoad={ymaps => setYmaps(ymaps)}
                 state={mapState}
                 instanceRef={ref => ref && getRoute(ref)}
+                width="100%" height="100%"
             />
         </YMaps>
     )

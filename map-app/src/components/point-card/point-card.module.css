@@ -1,0 +1,29 @@
+.point_card {
+    list-style: none;
+    display: flex;
+    padding: 5px 9px;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #3434;
+    border-radius: 6px;
+}
+
+.point_card:hover {
+    cursor: grab;
+}
+
+.button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: transparent;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button svg {
+    width: 20px;
+    height: 20px;
+}

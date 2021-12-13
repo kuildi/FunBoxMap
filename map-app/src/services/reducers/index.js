@@ -37,6 +37,7 @@ export const pathPoints = (state = initialState, action) => {
             const indexFrom = newPointsArr.indexOf(newPointsArr.find(item => item.pointKey === action.dragIndex));
             const dragItem = newPointsArr[indexFrom];
 
+            // Удалим перетаскиваемый элемент и вставим его на нужную позицию
             newPointsArr.splice(indexFrom, 1);
             newPointsArr.splice(indexTo, 0, dragItem);
 
