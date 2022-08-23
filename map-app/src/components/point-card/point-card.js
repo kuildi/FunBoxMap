@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
+import { IoReorderTwoOutline, IoCloseOutline } from "react-icons/io5";
 
 import CardStyles from './point-card.module.css';
-import { ReactComponent as RemoveIcon } from '../../icons/close.svg';
 import { REMOVE_POINT, DRAG_SORT } from '../../services/actions/constants';
 
 const PointCard = (props) => {
@@ -23,6 +23,7 @@ const PointCard = (props) => {
             if (!ref.current) {
                 return;
             }
+
             const dragIndex = item.pointKey;
             const hoverIndex = props.pointKey;
 
@@ -38,6 +39,7 @@ const PointCard = (props) => {
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
             }
+
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
                 return;
             }
@@ -49,6 +51,7 @@ const PointCard = (props) => {
             })
         }
     });
+
     const [{ isDragging }, drag] = useDrag({
         type: 'DRAG_POINT',
         item: { ...props },
@@ -62,13 +65,14 @@ const PointCard = (props) => {
 
     return (
         <li ref={ref} className={CardStyles.point_card} style={{ opacity }}>
-            <p title={props.text}>{props.text}</p>
+            <IoReorderTwoOutline className={`${CardStyles.point_icon} ${CardStyles.point_icon__drag}`}/>
+            <p className={CardStyles.point_title} title={props.text}>{props.text}</p>
             <button
-                className={CardStyles.button}
+                className={CardStyles.point_button}
                 title='Удалить точку'
                 onClick={() => removePoint(props.pointKey)}
             >
-                <RemoveIcon />
+                <IoCloseOutline className={`${CardStyles.point_icon} ${CardStyles.point_icon__remove}`} />
             </button>
         </li>
     )

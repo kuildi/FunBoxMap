@@ -1,0 +1,9 @@
+:root {
+    --border-radius: 6px;
+    --border-color: #343434;
+    --border-color-start: #ff3333;
+    --border-color-finish: #4296ea;
+    --shadow: 0 2px 6px 0 rgba(0, 0, 0, .2);
+    --primary-color: #ffffff;
+    --ref-color: #71b732;
+}

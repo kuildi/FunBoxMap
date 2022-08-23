@@ -10,13 +10,12 @@ const InputField = () => {
     const inputRef = useRef(null);
 
     const addPoint = (e) => {
-        if (e.code === 'Enter' && inputRef.current.value  && inputRef.current.value.trim().length) {
+        if (e.code === 'Enter' && inputRef.current.value && inputRef.current.value.trim().length) {
             dispatch({
                 type: ADD_POINT,
                 point: {
                     text: inputRef.current.value,
-                    pointKey: getRandomNum(1, 200) //Сгенерируем уникальный ключ, 
-                                                   //который поможет при drag-n-drop и удалении точки
+                    pointKey: getRandomNum(1, 200) 
                 }
             })
             inputRef.current.value = '';

@@ -1,29 +1,73 @@
 .point_card {
-    list-style: none;
+    position: relative;
     display: flex;
-    padding: 5px 9px;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #3434;
-    border-radius: 6px;
+    padding: 5px 9px 5px 35px;
+    border: 1px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    list-style: none;
+}
+
+.point_card:not(:last-child) {
+    margin: 0 0 10px;
 }
 
 .point_card:hover {
     cursor: grab;
 }
 
-.button {
+.point_card:first-child {
+    border: 2px solid var(--border-color-start);
+}
+
+.point_card:last-child {
+    border: 2px solid var(--border-color-finish);
+}
+
+[class*='ref_points'] .point_card {
+    border: 1px dashed var(--border-color);
+}
+
+.point_title {
+    font-size: 16px;
+    text-transform: capitalize;
+    line-height: 1.2;
+}
+
+.point_button {
     width: 20px;
     height: 20px;
     border: none;
     background-color: transparent;
 }
 
-.button:hover {
+.point_button:hover {
     cursor: pointer;
 }
 
-.button svg {
+.point_icon {
     width: 20px;
     height: 20px;
+}
+
+.point_icon__remove:hover {
+    color: red;
+}
+
+.point_icon__drag {
+    position: absolute;
+    left: 5px;
+}
+
+@media screen and (min-width: 769px) {
+    .point_card {
+        max-width: 330px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .point_card {
+        width: 100%;
+    }
 }

@@ -2,11 +2,14 @@ import {
     ADD_POINT,
     REMOVE_POINT,
     DRAG_SORT,
-    UPDATE_POINTS
+    UPDATE_POINTS,
+    UPDATE_DUR_DIS
 } from "../actions/constants";
 
 const initialState = {
-    points: []
+    points: [],
+    duration: null,
+    distance: null,
 }
 
 export const pathPoints = (state = initialState, action) => {
@@ -24,11 +27,20 @@ export const pathPoints = (state = initialState, action) => {
             };
         }
         case UPDATE_POINTS: {
-            const newPointsArr = action.payload;
+            const newPointsArr = [...state.points];
+
+            newPointsArr[action.index].text = action.text;
 
             return {
                 ...state,
                 points: [...newPointsArr]
+            };
+        }
+        case UPDATE_DUR_DIS: {
+            return {
+                ...state,
+                duration: action.duration,
+                distance: action.distance
             };
         }
         case DRAG_SORT: {

@@ -1,8 +1,146 @@
+.points_container {
+    margin: 20px 0 0;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    background-color: var(--primary-color);
+    opacity: 0;
+    transition: opacity .5s, transform .3s, max-height .6s, height .6s;
+    will-change: opacity, tramsform;
+}
+
+.points_container__show {
+    opacity: 1;
+}
+
 .points_list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 20px 0;
-    max-height: calc(100vh - 70px);
-    overflow: auto;
+    margin: 10px 0 0;
+}
+
+.info {
+    opacity: 0;
+    max-height: 0;
+    transition: opacity .2s, max-height .2s;
+    will-change: opacity, max-height;
+}
+
+.info__show {
+    opacity: 1;
+    max-height: 100px;
+    transition: opacity .5s, max-height .4s;
+}
+
+@media screen and (min-width: 769px) {
+    .points_container {
+        transform: translateX(-100%);
+    }
+
+    .points_container__show {
+        transform: translateX(0);
+    }
+
+    ._only_mobile {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .points_container {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 10px 16px;
+        z-index: 10;
+        border-radius: 10px 10px 0 0;
+        transform: translateY(100%);
+        max-height: 25%;
+    }
+
+    .points_container__expanded {
+        max-height: 65%;
+    }
+
+    .points_container__show {
+        transform: translateY(0);
+    }
+
+    .points_counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        margin: 0 0 10px 10px;
+        background-color: var(--ref-color);
+        border-radius: var(--border-radius);
+        color: var(--primary-color);
+        line-height: 1;
+        font-size: 12px;
+        max-height: 100px;
+        opacity: 1;
+        transition: max-height .4s, opacity .4s, margin .4s;
+    }
+
+    .points_container__expanded .points_counter {
+        max-height: 0;
+        opacity: 0;
+        margin: 0;
+    }
+
+    .points_counter::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -10px;
+        width: 0;
+        height: 100%;
+        border-right: 3px dashed var(--border-color);
+    }
+
+    .points_ref_points {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        max-height: 0;
+        opacity: 0;
+        transition: max-height .4s, opacity .4s, margin .4s;
+    }
+
+    .points_container__expanded .points_ref_points {
+        max-height: 1000px;
+        opacity: 1;
+        margin: 0 0 10px;
+    }
+
+    .points_container__expanded .points_list {
+        max-height: calc(100vh - 275px);
+        overflow-y: auto;
+    }
+
+    .info {
+        pointer-events: none;
+    }
+
+    .swipeable_icon {
+        position: absolute;
+        top: -27px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 40px;
+        opacity: .5;
+        pointer-events: none;
+        transition: top .4s;
+    }
+
+    .points_container__expanded .swipeable_icon {
+        top: -10px;
+    }
+
+    ._no_mobile {
+        display: none;
+    }
 }
